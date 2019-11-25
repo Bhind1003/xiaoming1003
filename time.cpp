@@ -73,16 +73,16 @@ int main() {
 	cout<<"请输入B的时间："<<endl;
 	b.SetTime();
 	cout<<"A的时间为："<<a<<endl;
-	a.Display();
+	//a.Display();
 	cout<<"B的时间为："<<b<<endl;
 	b.Display();
-	cout<<"c=a+b=";
+	//cout<<"c=a+b=";
 	c=a+b;
 	cout<<c<<endl;
-	c.Display();
+	//c.Display();
 	cout<<endl<<"c=a-b=";
 	c=a-b;
 	cout<<c<<endl;
-	c.Display();
+	//c.Display();
 	return 0;
 }
