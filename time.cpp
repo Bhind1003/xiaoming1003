@@ -78,7 +78,7 @@ int main() {
 	b.Display();
 	//cout<<"c=a+b=";
 	c=a+b;
-	cout<<c<<endl;
+	//cout<<c<<endl;
 	//c.Display();
 	cout<<endl<<"c=a-b=";
 	c=a-b;
