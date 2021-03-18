@@ -8,4 +8,4 @@ include_directories(ctest)
 add_executable(xiaoming1003
         ctest/main.cpp
         ctest/main.h
-        time.cpp)
+        ctest/time.cpp)
