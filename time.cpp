@@ -1,88 +1,48 @@
-#include <iostream>
+#include <bits/stdc++.h>
+
+#define maxn 113
 using namespace std;
-class Time {
-	public:
-		Time(int h=0,int m=0,int s=0) {
-			hour=h,minute=m,second=s;
-		}
-		void SetTime();
-		void Display();
-		Time operator + (Time &a);
-		Time operator - (Time &a);
-		friend ostream & operator<<(ostream &out,const Time &b);
-	private:
-		int hour,minute,second;
-};
-void Time::SetTime() {
-	do {
-		cout<<"input hour:"<<endl;
-		cin>>hour;
-	} while(hour<=0||hour>24);
-	do {
-		cout<<"input minute:"<<endl;
-		cin>>minute;
-	} while(minute<0||minute>=60);
-	do {
-		cout<<"input second:"<<endl;
-		cin>>second;
-	} while(second<0||second>=60);
-}
-void Time::Display() {
-//	cout<<hour<<":"<<minute<<":"<<second<<endl;
-}
-Time Time::operator + (Time &a) {
-	int h,m,s;
-	h=hour,m=minute,s=second;
-	if(second+a.second>=60) {
-		s=second+a.second-60;
-		m=minute+1;
-	} else s=s+a.second;
-	if(m+a.minute>=60) {
-		m=m+a.minute-60;
-		h=hour+1;
-	} else m=m+a.minute;
-	if(h+a.hour>24) {
-		h=h+a.hour-24;
-	} else h=h+a.hour;
-	return(Time(h,m,s));
-}
-Time Time::operator - (Time &a) {
-	int h,m,s;
-	h=hour,m=minute,s=second;
-	if(second-a.second<0) {
-		s=second-a.second+60;
-		m=minute-1;
-	} else s=second-a.second;
-	if(m-a.minute<0) {
-		m=m-a.minute+60;
-		h=hour-1;
-	} else m=m-a.minute;
-	if(h-a.hour<0) {
-		h=h-a.hour+24;
-	} else h=h-a.hour;
-	return(Time(h,m,s));
-}
-ostream & operator<<(ostream &out,const Time &b){
-	out<<"("<<b.hour<<':'<<b.minute<<':'<<b.second<<")";
-	return out;
-}
+int dp[maxn][maxn], path[maxn][maxn], a[maxn][maxn];
+
 int main() {
-	Time a,b,c;
-	cout<<"请输入A的时间："<<endl;
-	a.SetTime();
-	cout<<"请输入B的时间："<<endl;
-	b.SetTime();
-	cout<<"A的时间为："<<a<<endl;
-	//a.Display();
-	cout<<"B的时间为："<<b<<endl;
-	b.Display();
-	//cout<<"c=a+b=";
-	c=a+b;
-	//cout<<c<<endl;
-	//c.Display();
-	cout<<endl<<"c=a-b=";
-	c=a-b;
-	cout<<c<<endl;
-	//c.Display();
-	return 0;
+    int n, m;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= m; j++)
+            cin >> a[i][j];
+    for (int j = 1; j <= m; j++)//第一行
+    {
+        dp[1][j] = dp[1][j - 1] + a[1][j];
+        path[1][j] = 1;
+    }
+    for (int i = 1; i <= n; i++)//第一列
+    {
+        dp[i][1] = dp[i - 1][1] + a[i][1];
+        path[i][1] = 1;
+    }
+    for (int i = 2; i <= n; i++) {
+        for (int j = 2; j <= m; j++) {
+            if (dp[i - 1][j] < dp[i][j - 1])//上<左
+            {
+                dp[i][j] = dp[i][j - 1] + a[i][j];
+                path[i][j] = path[i][j - 1];
+            } else if (dp[i - 1][j] > dp[i][j - 1]) {
+                dp[i][j] = dp[i - 1][j] + a[i][j];
+                path[i][j] = path[i - 1][j];
+            } else//两者值相同
+            {
+                dp[i][j] = dp[i - 1][j] + a[i][j];
+                path[i][j] = path[i - 1][j] + path[i][j - 1];
+            }
+        }
+    }
+    cout << dp[n][m] << " " << path[n][m];
+    return 0;
 }
+/*
+4  5
+2  -1  6  -2  9
+-3  2  5  -5  1
+5   8  3  -2  4
+5   2  8  -4  7
+*/
