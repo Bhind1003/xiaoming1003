@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 
-#define max 113
 using namespace std;
 struct node {
     string name;
@@ -37,7 +36,7 @@ int main() {
                     jg = 0;
                 }
             }
-            if (jg){
+            if (jg) {
                 flag = 0;
                 cout << arr[i].name << endl;
             }
