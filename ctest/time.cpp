@@ -3,16 +3,18 @@
 #define max 113
 using namespace std;
 struct node {
-    char name[14];
+    string name;
     int n;
 };
-bool cmp(struct node){
 
+bool cmp(struct node a, struct node b) {
+    return a.name < b.name;
 }
+
 int main() {
     int n;
     cin >> n;
-    char name[n][14];
+    basic_string<char> name[n];
     for (int i = 0; i < n; ++i) {
         cin >> name[i];
     }
@@ -25,7 +27,23 @@ int main() {
         sum += arr[i].n;
     }
     sum /= tn;
-    cout << "Bing Mei You" << endl;
+    int flag = 1;
+    sort(arr, arr + tn, cmp);
+    for (int i = 0; i < tn; ++i) {
+        if (arr[i].n > sum) {
+            int jg = 1;
+            for (int j = 0; j < n; ++j) {
+                if (arr[i].name == name[j]) {
+                    jg = 0;
+                }
+            }
+            if (jg){
+                flag = 0;
+                cout << arr[i].name << endl;
+            }
+        }
+    }
+    if (flag)cout << "Bing Mei You" << endl;
     return 0;
 }
 /*
