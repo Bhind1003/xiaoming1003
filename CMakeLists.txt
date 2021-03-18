@@ -6,6 +6,4 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(ctest)
 
 add_executable(xiaoming1003
-        ctest/main.cpp
-        ctest/main.h
         ctest/time.cpp)
