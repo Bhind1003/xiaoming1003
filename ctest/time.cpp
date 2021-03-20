@@ -1,59 +1,37 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-struct node {
-    string name;
-    int n;
-};
-
-bool cmp(struct node a, struct node b) {
-    return a.name < b.name;
-}
 
 int main() {
-    int n;
-    cin >> n;
-    basic_string<char> name[n];
-    for (int i = 0; i < n; ++i) {
-        cin >> name[i];
+    int n, m, a[100005], x, l, r, index;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
     }
-    int tn;
-    cin >> tn;
-    struct node arr[tn];
-    double sum = 0.0;
-    for (int i = 0; i < tn; ++i) {
-        cin >> arr[i].name >> arr[i].n;
-        sum += arr[i].n;
-    }
-    sum /= tn;
-    int flag = 1;
-    sort(arr, arr + tn, cmp);
-    for (int i = 0; i < tn; ++i) {
-        if (arr[i].n > sum) {
-            int jg = 1;
-            for (int j = 0; j < n; ++j) {
-                if (arr[i].name == name[j]) {
-                    jg = 0;
+    for (int i = 0; i < m; i++) {
+        cin >> x >> l >> r;
+        if (x == 1) {
+            index = l;
+            for (int j = l + 1; j <= r; j++) {
+                if (a[j] > a[index]) {
+                    index = j;
                 }
             }
-            if (jg) {
-                flag = 0;
-                cout << arr[i].name << endl;
-            }
+            printf("%d %d\n", index, a[index]);
+        } else {
+            a[l] = r;
         }
     }
-    if (flag)cout << "Bing Mei You" << endl;
     return 0;
 }
 /*
-10 GAO3 Magi Zha1 Sen1 Quan FaMK LSum Eins FatM LLao
-8
-Magi 50
-Pota 30
-LLao 3
-Ammy 48
-Dave 15
-GAO3 31
-Zoro 1
-Cath 60
+5 6
+1 2 3 4 5
+1 1 5
+0 3 6
+1 3 4
+1 4 5
+0 2 9
+1 1 5
+
 */
