@@ -1,53 +1,46 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-map<int, int> myMap;
-map<int, int>::iterator temp;
+map<string, int> my;
+map<string, int>::iterator temp;
+
+void fun(const string &a) {
+    if (my[a])
+        my[a]++;
+    else my[a] = 1;
+}
 
 int main() {
     int n;
     cin >> n;
     for (int i = 0; i < n; ++i) {
-        int a, b;
+        string a, b;
         cin >> a >> b;
-        myMap[a] = b;
-        myMap[b] = a;
+        fun(a), fun(b);
+//        cout << my[a] << " " << my[b] << endl;
     }
-    int m;
-    cin >> m;
-    int data[m + 14], temp[m + 14];
-    int cnt = 0;
-    for (int i = 0; i < m; ++i) {
-        cin >> temp[i];
-    }
-    for (int i = 0; i < m; ++i) {
-        if (!myMap[temp[i]]) {
-            data[cnt++] = temp[i];
-        } else {
-            int flag = 1;
-            for (int j = 0; j < m; ++j) {
-                if (myMap[temp[i]] == temp[j]) {
-                    flag = 0;
-                }
-            }
-            if (flag) {
-                data[cnt++] = temp[i];
+    int max = 0, cnt = 0;
+    string maxName;
+    for (temp = my.begin(); temp != my.end(); temp++) {
+        if (max < temp->second) {
+            max = temp->second;
+            maxName = temp->first;
+        } else if (max == temp->second) {
+            if (maxName > temp->first) {
+                maxName = temp->first;
+                cnt++;
             }
         }
     }
-    sort(data, data + cnt);
-    cout << cnt << endl;
-    for (int i = 0; i < cnt; ++i) {
-        cout << data[i];
-        if (i != cnt - 1)cout << " ";
-    }
+    cout << maxName << " " << max;
+    if (cnt > 0)cout << " " << cnt;
     return 0;
 }
 /*
-3
-11111 22222
-33333 44444
-55555 66666
-7
-55555 44444 10000 88888 22222 11111 23333
+4
+13005711862 13588625832
+13505711862 13088625832
+13588625832 18087925832
+15005713862 13588625832
+
 */
