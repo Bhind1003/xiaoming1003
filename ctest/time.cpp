@@ -1,41 +1,38 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-map<string, int> my;
-map<string, int>::iterator temp;
-
-void fun(const string &a) {
-    if (my[a])
-        my[a]++;
-    else my[a] = 1;
-}
 
 int main() {
-    int n;
+    int n, i, k, count = 0;
     cin >> n;
-    for (int i = 0; i < n; ++i) {
-        string a, b;
-        cin >> a >> b;
-        fun(a), fun(b);
-//        cout << my[a] << " " << my[b] << endl;
+    unordered_map<string, int> hash;
+    vector<string> out;
+    for (i = 0; i < n; i++) {
+        string c1, c2;
+        cin >> c1 >> c2;
+        hash[c1]++;
+        hash[c2]++;
+        k = hash[c1] > hash[c2] ? hash[c1] : hash[c2];
     }
-    int max = 0, cnt = 0;
-    string maxName;
-    for (temp = my.begin(); temp != my.end(); temp++) {
-        if (max < temp->second) {
-            max = temp->second;
-            maxName = temp->first;
-        } else if (max == temp->second) {
-            if (maxName > temp->first) {
-                maxName = temp->first;
-                cnt++;
-            }
+    unordered_map<string, int>::iterator iter;
+    iter = hash.begin();
+    while (iter != hash.end()) {
+        if (k == iter->second) {
+            out.push_back(iter->first);
+            count++;
         }
+        iter++;
     }
-    cout << maxName << " " << max;
-    if (cnt > 0)cout << " " << cnt;
+    if (count == 1) {
+        for (auto x:out)
+            cout << x << " " << k;
+    } else {
+        sort(out.begin(), out.end());
+        cout << out[0] << " " << k << " " << count;
+    }
     return 0;
 }
+
 /*
 4
 13005711862 13588625832
