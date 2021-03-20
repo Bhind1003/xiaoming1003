@@ -1,37 +1,53 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+map<int, int> myMap;
+map<int, int>::iterator temp;
 
 int main() {
-    int n, m, a[100005], x, l, r, index;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; ++i) {
+        int a, b;
+        cin >> a >> b;
+        myMap[a] = b;
+        myMap[b] = a;
     }
-    for (int i = 0; i < m; i++) {
-        cin >> x >> l >> r;
-        if (x == 1) {
-            index = l;
-            for (int j = l + 1; j <= r; j++) {
-                if (a[j] > a[index]) {
-                    index = j;
+    int m;
+    cin >> m;
+    int data[m + 14], temp[m + 14];
+    int cnt = 0;
+    for (int i = 0; i < m; ++i) {
+        cin >> temp[i];
+    }
+    for (int i = 0; i < m; ++i) {
+        if (!myMap[temp[i]]) {
+            data[cnt++] = temp[i];
+        } else {
+            int flag = 1;
+            for (int j = 0; j < m; ++j) {
+                if (myMap[temp[i]] == temp[j]) {
+                    flag = 0;
                 }
             }
-            printf("%d %d\n", index, a[index]);
-        } else {
-            a[l] = r;
+            if (flag) {
+                data[cnt++] = temp[i];
+            }
         }
+    }
+    sort(data, data + cnt);
+    cout << cnt << endl;
+    for (int i = 0; i < cnt; ++i) {
+        cout << data[i];
+        if (i != cnt - 1)cout << " ";
     }
     return 0;
 }
 /*
-5 6
-1 2 3 4 5
-1 1 5
-0 3 6
-1 3 4
-1 4 5
-0 2 9
-1 1 5
-
+3
+11111 22222
+33333 44444
+55555 66666
+7
+55555 44444 10000 88888 22222 11111 23333
 */
