@@ -1,41 +1,28 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-typedef struct node {
-    int begin;
-    int end;
-} node;
-
-bool cmp(node a, node b) {
-    return a.end < b.end;
-}
 
 int main() {
-    int n;
-    cin >> n;
-    node a[n];
-    for (int i = 0; i < n; ++i) {
-        cin >> a[i].begin >> a[i].end;
+    int n, k;
+    cin >> n >> k;
+    int money[1014] = {0}, len[1014] = {0}, dp[1014] = {0};
+    for (int i = 0; i < k; ++i) {
+        cin >> len[i];
     }
-    sort(a, a + n, cmp);
-//    for (int i = 0; i < n; ++i) {
-//        cout << a[i].begin << " " << a[i].end << endl;
-//    }
-    int cnt = 1,k=0;
-    for (int i = 1; i < n ; ++i) {
-        if (a[k].end < a[i].begin) {
-            k=i;
-            cnt++;
+    for (int i = 0; i < k; ++i) {
+        cin >> money[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        for (int j = len[i]; j <= n; ++j) {
+            dp[j] = max(dp[j], dp[j - len[i]] + money[i]);
         }
     }
-    cout << cnt << endl;
+
+    cout << dp[n];
     return 0;
 }
 /*
-5
-6 8
-1 5
-0 2
-2 3
-0 1
+8 10
+1 2 3 4 5  6  7  8  9  10
+1 5 8 9 10 17 17 20 23 28
 */
