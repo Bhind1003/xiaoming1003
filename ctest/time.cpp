@@ -1,50 +1,41 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+typedef struct node {
+    int begin;
+    int end;
+} node;
 
-bool fun(int n) {
-    if (n <= 2) {
-        return true;
-    }
-    for (int i = 2; i <= sqrt(n); ++i) {
-        if (n % i == 0) {
-            return false;
-        }
-    }
-    return true;
+bool cmp(node a, node b) {
+    return a.end < b.end;
 }
-int hash2[10010];
 
 int main() {
-    int m, n;
-    cin >> m >> n;
-    int arr[n];
-    while (!fun(m)) {
-        m++;
-    }
-//    cout << m;
+    int n;
+    cin >> n;
+    node a[n];
     for (int i = 0; i < n; ++i) {
-        cin >> arr[i];
-//        cout<<arr[i]%m;
-        if (hash2[arr[i] % m]==0) {
-            hash2[arr[i] % m] = arr[i];
+        cin >> a[i].begin >> a[i].end;
+    }
+    sort(a, a + n, cmp);
+//    for (int i = 0; i < n; ++i) {
+//        cout << a[i].begin << " " << a[i].end << endl;
+//    }
+    int cnt = 1,k=0;
+    for (int i = 1; i < n ; ++i) {
+        if (a[k].end < a[i].begin) {
+            k=i;
+            cnt++;
         }
     }
-    for (int i = 0; i < n; ++i) {
-        if (hash2[arr[i] % m] && hash2[arr[i] % m] == arr[i]) {
-            cout << arr[i] % m;
-        } else {
-            cout << "-";
-        }
-        if (i != n - 1) {
-            cout << " ";
-        }
-    }
-    cout << endl;
+    cout << cnt << endl;
     return 0;
 }
 /*
-4 4
-10 6 4 15
-
+5
+6 8
+1 5
+0 2
+2 3
+0 1
 */
